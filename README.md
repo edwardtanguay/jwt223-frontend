@@ -20,28 +20,11 @@ This is the minimal starting point for a basic React-frontend with Node/Express-
   - TypeScript 
   - ES6 modules
   - simple MVC Structure (`server.ts`/`model.ts`)
-  - cookie/session authentication
+  - JWT
 
 ## install
 
-- go to your projects directory
-- create a directory called `site001`
-
-## install backend
-
-- go to your projects directory
-- `cd site001`
-- `git clone git@github.com:edwardtanguay/react-node-simple-admin-auth-backend.git site001-backend`
-- `npm i`
-- `npm run dev`
-
-## install frontend
-
-- go to your projects directory
-- `cd site001`
-- `git clone git@github.com:edwardtanguay/react-node-simple-admin-auth-backend.git site001-frontend`
-- `npm i`
-- `npm run dev`
+- see this Howto for installation details: https://edwardtanguay.vercel.app/howtos?id=681
 
 ## more starters, templates and frameworks
 
