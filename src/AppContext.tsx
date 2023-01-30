@@ -42,26 +42,6 @@ export const AppProvider: React.FC<IAppProvider> = ({ children }) => {
 		setWelcomeMessage(_welcomeMessage);
 	};
 
-	// useEffect(() => {
-	// 	(async () => {
-	// 		try {
-	// 			const user = (
-	// 				await axios.get(`${backendUrl}/currentuser`, {
-	// 					withCredentials: true,
-	// 				})
-	// 			).data;
-	// 			if (user === 'admin') {
-	// 				setAdminIsLoggedIn(true);
-	// 			}
-	// 		} catch (e: any) {
-	// 			if (e.code !== 'ERR_BAD_REQUEST') {
-	// 				const _appMessage = `Sorry, there was an unknown error (${e.code}).`;
-	// 				setAppMessage(_appMessage);
-	// 			}
-	// 		}
-	// 	})();
-	// }, []);
-
 	useEffect(() => {
 		(async () => {
 			const response = await fetch(`${backendUrl}/currentuser`, {
