@@ -72,7 +72,6 @@ export const AppProvider: React.FC<IAppProvider> = ({ children }) => {
 				},
 			});
 			if (response.ok) {
-				const data = await response.json();
 				setAdminIsLoggedIn(true);
 			}
 		})();
