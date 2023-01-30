@@ -135,19 +135,6 @@ export const AppProvider: React.FC<IAppProvider> = ({ children }) => {
 	const handleSaveWelcomeMessage = async () => {
 		let _appMessage = '';
 		try {
-			// await axios.post(
-			// 	`${backendUrl}/welcomeMessage`,
-			// 	{
-			// 		welcomeMessage,
-			// 	},
-			// 	{
-			// 		headers: {
-			// 			'Content-Type': 'application/json',
-			// 		},
-			// 		withCredentials: true,
-			// 	}
-			// );
-
 			const response = await fetch(`${backendUrl}/welcomemessage`, {
 				method: 'POST',
 				body: JSON.stringify({ welcomeMessage }),
