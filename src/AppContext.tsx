@@ -42,22 +42,38 @@ export const AppProvider: React.FC<IAppProvider> = ({ children }) => {
 		setWelcomeMessage(_welcomeMessage);
 	};
 
+	// useEffect(() => {
+	// 	(async () => {
+	// 		try {
+	// 			const user = (
+	// 				await axios.get(`${backendUrl}/currentuser`, {
+	// 					withCredentials: true,
+	// 				})
+	// 			).data;
+	// 			if (user === 'admin') {
+	// 				setAdminIsLoggedIn(true);
+	// 			}
+	// 		} catch (e: any) {
+	// 			if (e.code !== 'ERR_BAD_REQUEST') {
+	// 				const _appMessage = `Sorry, there was an unknown error (${e.code}).`;
+	// 				setAppMessage(_appMessage);
+	// 			}
+	// 		}
+	// 	})();
+	// }, []);
+
 	useEffect(() => {
 		(async () => {
-			try {
-				const user = (
-					await axios.get(`${backendUrl}/currentuser`, {
-						withCredentials: true,
-					})
-				).data;
-				if (user === 'admin') {
-					setAdminIsLoggedIn(true);
-				}
-			} catch (e: any) {
-				if (e.code !== 'ERR_BAD_REQUEST') {
-					const _appMessage = `Sorry, there was an unknown error (${e.code}).`;
-					setAppMessage(_appMessage);
-				}
+			const response = await fetch(`${backendUrl}/currentuser`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					authorization: 'Bearer ' + localStorage.getItem('token'),
+				},
+			});
+			if (response.ok) {
+				const data = await response.json();
+				setAdminIsLoggedIn(true);
 			}
 		})();
 	}, []);
@@ -69,7 +85,7 @@ export const AppProvider: React.FC<IAppProvider> = ({ children }) => {
 	const loginAsAdmin = async (callback: () => void) => {
 		let _appMessage = '';
 		try {
-			await axios.post(
+			const response = await axios.post(
 				`${backendUrl}/login`,
 				{
 					password,
@@ -82,6 +98,7 @@ export const AppProvider: React.FC<IAppProvider> = ({ children }) => {
 				}
 			);
 			setAdminIsLoggedIn(true);
+			localStorage.setItem('token', response.data.token);
 			callback();
 		} catch (e: any) {
 			switch (e.code) {
