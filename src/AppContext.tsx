@@ -124,20 +124,8 @@ export const AppProvider: React.FC<IAppProvider> = ({ children }) => {
 	};
 
 	const logoutAsAdmin = () => {
-		(async () => {
-			try {
-				const user = (
-					await axios.get(`${backendUrl}/logout`, {
-						withCredentials: true,
-					})
-				).data;
-				setAdminIsLoggedIn(false);
-			} catch (e: any) {
-				console.log(
-					`There was a problem with the logout: ${e.message}`
-				);
-			}
-		})();
+		localStorage.removeItem('token');
+		setAdminIsLoggedIn(false);
 	};
 
 	const turnOnWelcomeMessageEditMode = () => {
@@ -147,18 +135,31 @@ export const AppProvider: React.FC<IAppProvider> = ({ children }) => {
 	const handleSaveWelcomeMessage = async () => {
 		let _appMessage = '';
 		try {
-			await axios.post(
-				`${backendUrl}/welcomeMessage`,
-				{
-					welcomeMessage,
+			// await axios.post(
+			// 	`${backendUrl}/welcomeMessage`,
+			// 	{
+			// 		welcomeMessage,
+			// 	},
+			// 	{
+			// 		headers: {
+			// 			'Content-Type': 'application/json',
+			// 		},
+			// 		withCredentials: true,
+			// 	}
+			// );
+
+			const response = await fetch(`${backendUrl}/welcomemessage`, {
+				method: 'POST',
+				body: JSON.stringify({ welcomeMessage }),
+				headers: {
+					'Content-Type': 'application/json',
+					authorization: 'Bearer ' + localStorage.getItem('token'),
 				},
-				{
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					withCredentials: true,
-				}
-			);
+			});
+			if (response.ok) {
+				setAdminIsLoggedIn(true);
+			}
+
 			setIsEditingWelcomeMessage(false);
 		} catch (e: any) {
 			switch (e.code) {
